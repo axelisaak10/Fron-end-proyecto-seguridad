@@ -1,0 +1,150 @@
+.dashboard-page {
+    padding: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    color: #0f172a;
+    animation: fadeUp 0.22s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.header-info {
+    margin-bottom: 1.5rem;
+}
+
+.page-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.page-title i {
+    color: #2563eb;
+    font-size: 1.15rem;
+    background: #eff6ff;
+    padding: 0.4rem;
+    border-radius: 8px;
+}
+
+.page-subtitle {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.mb-4 { margin-bottom: 1.5rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+/* ===== Stats Grid ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.85rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #64748b;
+    display: block;
+    margin-top: 0.2rem;
+}
+
+/* Card color themes */
+.total-card      .stat-icon { background: #eff6ff; color: #2563eb; }
+.pendientes-card .stat-icon { background: #f1f5f9; color: #64748b; }
+.progreso-card   .stat-icon { background: #eff6ff; color: #2563eb; }
+.revision-card   .stat-icon { background: #fffbeb; color: #f59e0b; }
+.bloqueado-card  .stat-icon { background: #fef2f2; color: #ef4444; }
+.hechos-card     .stat-icon { background: #f0fdf4; color: #22c55e; }
+
+/* ===== PrimeNG Card override ===== */
+:host ::ng-deep .p-card {
+    background: #fff !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: none;
+    color: #0f172a !important;
+}
+
+:host ::ng-deep .p-card .p-card-body {
+    padding: 1.1rem;
+}
+
+:host ::ng-deep .p-card .p-card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+}
+
+.text-primary { color: #2563eb !important; }
+
+.text-xl {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.text-xl i { color: #2563eb; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .page-title { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+}
