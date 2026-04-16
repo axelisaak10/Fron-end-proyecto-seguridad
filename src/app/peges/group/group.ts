@@ -1470,6 +1470,10 @@ export class Group implements OnInit, OnDestroy {
     this.showMemberPermissionsDialog = false;
   }
 
+  getPermissionsByCategory(category: 'group' | 'ticket'): any[] {
+    return this.availableGroupPermissions.filter(p => p.nombre.startsWith(category + ':'));
+  }
+
   isPermissionSelected(permissionName: string): boolean {
     return this.selectedPermissionsForMember.includes(permissionName);
   }

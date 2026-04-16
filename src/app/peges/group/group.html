@@ -275,25 +275,58 @@
                 } @else if (isCreador(selectedMemberForPermissions!)) {
                     <p-message severity="warn" text="Acceso Maestro: El creador del grupo posee todos los permisos heredados."></p-message>
                 } @else {
-                    <div class="permission-meta flex justify-between items-center mb-4 p-3 bg-primary-light rounded-lg">
-                        <span class="text-sm font-semibold text-primary">Control de Acceso Local</span>
+                    <div class="permission-meta flex justify-between items-center mb-6 p-4 bg-primary-light rounded-xl border border-primary/10">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold text-primary flex items-center gap-2">
+                                <i class="pi pi-shield"></i> Control de Acceso Local
+                            </span>
+                            <small class="text-slate-500">Define qué puede hacer este usuario dentro del grupo.</small>
+                        </div>
                         <p-checkbox [binary]="true" [ngModel]="allPermissionsSelected" 
                             [indeterminate]="somePermissionsSelected" label="Seleccionar Todo" 
                             (onChange)="toggleAllPermissions()"></p-checkbox>
                     </div>
 
-                    <div class="permissions-list flex flex-col gap-2 max-h-96 overflow-y-auto pr-2">
-                        @for (perm of availableGroupPermissions; track perm.nombre) {
-                        <div class="flex items-center p-3 border border-slate-100 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
-                            (click)="togglePermission(perm.nombre, $event)">
-                            <p-checkbox [value]="perm.nombre" [(ngModel)]="selectedPermissionsForMember" 
-                                style="pointer-events:none;" [inputId]="'chk-'+perm.nombre"></p-checkbox>
-                            <div class="flex flex-col ml-3">
-                                <span class="font-bold text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
-                                <span class="text-xs text-slate-500">{{ perm.descripcion }}</span>
+                    <div class="permissions-container max-h-[50vh] overflow-y-auto pr-4 custom-scrollbar">
+                        <!-- Categoría: Administración de Grupo -->
+                        <div class="permission-section mb-6">
+                            <h4 class="section-divider flex items-center gap-2 text-navy-900 font-bold text-xs uppercase tracking-widest mb-4">
+                                <i class="pi pi-users text-primary"></i> Administración de Grupo
+                            </h4>
+                            <div class="grid grid-cols-1 gap-3">
+                                @for (perm of getPermissionsByCategory('group'); track perm.nombre) {
+                                <div class="permission-card flex items-start p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-all cursor-pointer"
+                                    (click)="togglePermission(perm.nombre, $event)">
+                                    <p-checkbox [value]="perm.nombre" [(ngModel)]="selectedPermissionsForMember" 
+                                        style="pointer-events:none;" [inputId]="'chk-'+perm.nombre"></p-checkbox>
+                                    <div class="flex flex-col ml-3">
+                                        <span class="font-bold text-navy-900 text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
+                                        <p class="text-[11px] text-slate-500 leading-relaxed mt-0.5">{{ perm.descripcion }}</p>
+                                    </div>
+                                </div>
+                                }
                             </div>
                         </div>
-                        }
+
+                        <!-- Categoría: Operaciones de Tickets -->
+                        <div class="permission-section">
+                            <h4 class="section-divider flex items-center gap-2 text-navy-900 font-bold text-xs uppercase tracking-widest mb-4">
+                                <i class="pi pi-ticket text-primary"></i> Flujo de Tickets
+                            </h4>
+                            <div class="grid grid-cols-1 gap-3">
+                                @for (perm of getPermissionsByCategory('ticket'); track perm.nombre) {
+                                <div class="permission-card flex items-start p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-all cursor-pointer"
+                                    (click)="togglePermission(perm.nombre, $event)">
+                                    <p-checkbox [value]="perm.nombre" [(ngModel)]="selectedPermissionsForMember" 
+                                        style="pointer-events:none;" [inputId]="'chk-'+perm.nombre"></p-checkbox>
+                                    <div class="flex flex-col ml-3">
+                                        <span class="font-bold text-navy-900 text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
+                                        <p class="text-[11px] text-slate-500 leading-relaxed mt-0.5">{{ perm.descripcion }}</p>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 }
             </div>

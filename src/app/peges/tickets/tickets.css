@@ -102,8 +102,13 @@
     transition: var(--transition);
 }
 
-:host ::ng-deep .group-dropdown.p-select:hover {
-    border-color: var(--primary) !important;
+:host ::ng-deep .p-select .p-select-label {
+    color: var(--navy-900) !important;
+    font-weight: 600 !important;
+}
+
+:host ::ng-deep .p-select .p-select-placeholder {
+    color: var(--slate-400) !important;
 }
 
 /* ======= KANBAN BOARD ======= */
