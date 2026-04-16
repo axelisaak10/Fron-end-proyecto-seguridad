@@ -23,6 +23,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { ProgressSpinner } from 'primeng/progressspinner';
 import { EditorModule } from 'primeng/editor';
 
 import { PermissionService } from '../../services/permission.service';
@@ -93,7 +94,8 @@ export interface TicketItem {
     MessageModule,
     ToastModule,
     ConfirmDialogModule,
-    EditorModule
+    EditorModule,
+    ProgressSpinner
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './group.html',
@@ -244,7 +246,7 @@ export class Group implements OnInit, OnDestroy {
   loadGroups(): void {
     this.isLoading = true
     this.http.get<any>(`${this.apiUrl}/groups`, { withCredentials: true }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         const rawGroups = response?.data?.data || response?.data || []
         this.allGroups = Array.isArray(rawGroups) ? rawGroups.map((g: any) => this.mapBackendGroup(g)) : []
         this.loadTickets()
@@ -343,25 +345,25 @@ export class Group implements OnInit, OnDestroy {
 
   loadEstados(): void {
     this.http.get<any>(`${this.apiUrl}/tickets/estados`, { withCredentials: true }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         const rawEstados = response?.data?.data || response?.data || []
         if (Array.isArray(rawEstados) && rawEstados.length > 0) {
           this.estadoOptions = rawEstados.map((e: any) => ({ label: e.nombre, value: e.id }))
         }
       },
-      error: (err) => console.error('loadEstados error:', err)
+      error: (err: any) => console.error('loadEstados error:', err)
     })
   }
 
   loadPrioridades(): void {
     this.http.get<any>(`${this.apiUrl}/tickets/prioridades`, { withCredentials: true }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         const rawPrioridades = response?.data?.data || response?.data || []
         if (Array.isArray(rawPrioridades) && rawPrioridades.length > 0) {
           this.prioridadOptions = rawPrioridades.map((p: any) => ({ label: p.nombre, value: p.id }))
         }
       },
-      error: (err) => console.error('loadPrioridades error:', err)
+      error: (err: any) => console.error('loadPrioridades error:', err)
     })
   }
 
@@ -377,7 +379,7 @@ export class Group implements OnInit, OnDestroy {
     }
 
     this.http.get<any>(`${this.apiUrl}/tickets`, { withCredentials: true }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         const rawTickets = response?.data || []
         this.allTickets = Array.isArray(rawTickets) ? rawTickets.map((t: any) => this.mapBackendTicket(t)) : []
 
@@ -438,13 +440,13 @@ export class Group implements OnInit, OnDestroy {
     this.http
       .get<any>(`${this.apiUrl}/groups/members`, { withCredentials: true })
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           const rawMembers = response?.data?.data || response?.data || [];
           this.allMembers = Array.isArray(rawMembers) 
             ? rawMembers.map((m: any) => this.mapBackendMember(m)) 
             : [];
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error loading members', err);
           this.allMembers = [];
         },
@@ -520,7 +522,7 @@ export class Group implements OnInit, OnDestroy {
               detail: 'Grupo actualizado correctamente',
             });
           },
-          error: (err) => console.error('Error updating group', err),
+          error: (err: any) => console.error('Error updating group', err),
         });
     } else {
       this.http
@@ -535,7 +537,7 @@ export class Group implements OnInit, OnDestroy {
               detail: 'Grupo creado correctamente',
             });
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error('Error creating group', err);
             this.showDialog = false;
             this.loadGroups();
@@ -555,7 +557,7 @@ export class Group implements OnInit, OnDestroy {
       accept: () => {
         this.http.delete(`${this.apiUrl}/groups/${group.id}`, { withCredentials: true }).subscribe({
           next: () => this.loadGroups(),
-          error: (err) => console.error('Error deleting group', err),
+          error: (err: any) => console.error('Error deleting group', err),
         });
       },
     });
@@ -611,7 +613,7 @@ export class Group implements OnInit, OnDestroy {
 
   loadGroupMembers(groupId: string, callback?: () => void): void {
     this.http.get<any>(`${this.apiUrl}/groups/${groupId}/members`, { withCredentials: true }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         const rawMembers = response?.data?.data || response?.data || []
         this.groupMembers = Array.isArray(rawMembers) ? rawMembers.map((m: any) => ({
           ...m,
@@ -776,7 +778,7 @@ export class Group implements OnInit, OnDestroy {
           .delete(`${this.apiUrl}/tickets/${ticket.id}`, { withCredentials: true })
           .subscribe({
             next: () => this.loadTickets(),
-            error: (err) => console.error('Error deleting ticket', err),
+            error: (err: any) => console.error('Error deleting ticket', err),
           });
       },
     });
@@ -794,7 +796,7 @@ export class Group implements OnInit, OnDestroy {
   fetchTicketHistory(ticketId: string) {
     this.isDetailsLoading = true;
     this.http.get<any>(`${this.apiUrl}/tickets/${ticketId}/historial`, { withCredentials: true }).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         if (res.data) {
           this.ticketHistory = res.data;
         }
@@ -808,7 +810,7 @@ export class Group implements OnInit, OnDestroy {
   fetchTicketComments(ticketId: string) {
     this.isDetailsLoading = true;
     this.http.get<any>(`${this.apiUrl}/comentarios?ticket_id=${ticketId}`, { withCredentials: true }).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         if (res.data) {
           this.ticketComments = res.data;
         }
@@ -828,12 +830,12 @@ export class Group implements OnInit, OnDestroy {
     };
     
     this.http.post<any>(`${this.apiUrl}/comentarios`, payload, { withCredentials: true }).subscribe({
-        next: (res) => {
+        next: (res: any) => {
             this.newCommentText = '';
             this.fetchTicketComments(this.selectedTicketDetails!.id); // refrescar chat
             this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Comentario agregado' });
         },
-        error: (err) => {
+        error: (err: any) => {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No tienes permiso o error al enviar' });
         }
     });
@@ -889,7 +891,7 @@ export class Group implements OnInit, OnDestroy {
             this.cdr.markForCheck();
           }, 0);
         },
-        error: (err) => console.error('Error updating ticket status', err),
+        error: (err: any) => console.error('Error updating ticket status', err),
       });
   }
 
@@ -918,7 +920,7 @@ export class Group implements OnInit, OnDestroy {
 
   loadAvailableUsers(callback?: () => void): void {
     this.http.get<any>(`${this.apiUrl}/users`, { withCredentials: true }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         let rawUsers: any[] = [];
         const rData = response?.data;
         
@@ -945,7 +947,7 @@ export class Group implements OnInit, OnDestroy {
         if (callback) callback();
         this.cdr.markForCheck();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading users', err);
         if (callback) callback();
       },
@@ -982,7 +984,7 @@ export class Group implements OnInit, OnDestroy {
             detail: 'Usuario agregado al grupo correctamente',
           });
         },
-        error: (err) => {
+        error: (err: any) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -1010,7 +1012,7 @@ export class Group implements OnInit, OnDestroy {
               this.loadMembers();
               this.loadGroups();
             },
-            error: (err) => console.error('Error removing member', err),
+            error: (err: any) => console.error('Error removing member', err),
           });
       },
     });
@@ -1280,7 +1282,7 @@ export class Group implements OnInit, OnDestroy {
         next: () => {
           // Ya no bloqueamos la UI con loadTickets() para actualizar el DOM principal.
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error updating ticket status via drag', err);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al cambiar de estado' });
           
@@ -1337,14 +1339,14 @@ export class Group implements OnInit, OnDestroy {
         withCredentials: true,
       })
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           const rawPerms = response?.data?.data || response?.data || [];
           this.memberPermissions = Array.isArray(rawPerms) ? rawPerms : [];
           this.selectedPermissionsForMember = [...this.memberPermissions.map((p: any) => p.nombre)];
           this.isLoadingPermissions = false;
           this.cdr.markForCheck();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error loading member permissions', err);
           this.memberPermissions = [];
           this.isLoadingPermissions = false;
@@ -1357,12 +1359,12 @@ export class Group implements OnInit, OnDestroy {
     this.http
       .get<any>(`${this.apiUrl}/groups/permissions`, { withCredentials: true })
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           const rawPerms = response?.data?.data || response?.data || [];
           this.availableGroupPermissions = Array.isArray(rawPerms) ? rawPerms : [];
           this.cdr.markForCheck();
         },
-        error: (err) => console.error('Error loading permissions', err),
+        error: (err: any) => console.error('Error loading permissions', err),
       });
   }
 

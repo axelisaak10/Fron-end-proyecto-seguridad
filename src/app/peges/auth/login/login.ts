@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
-import { Card } from 'primeng/card';
-import { Message } from 'primeng/message';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../../services/auth.service';
@@ -20,8 +18,7 @@ import { AuthService } from '../../../services/auth.service';
     Button,
     InputText,
     Password,
-    Card,
-    Message,
+    Password,
     Toast,
   ],
   providers: [MessageService],
