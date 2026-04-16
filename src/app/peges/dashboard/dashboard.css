@@ -115,12 +115,12 @@
     color: rgba(255,255,255,0.9) !important;
 }
 
-/* ======= OVERLAY PANEL (Dropdown List) ======= */
+/* ======= OVERLAY PANEL (Dropdown List - MIDNIGHT PREMIUM) ======= */
 ::ng-deep .premium-dashboard-dropdown {
-    background: #ffffff !important;
-    border: 1px solid var(--slate-200) !important;
+    background: #0f172a !important; /* Navy 900 */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 12px !important;
-    box-shadow: var(--shadow-lg) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
     margin-top: 8px !important;
     overflow: hidden !important;
 }
@@ -130,39 +130,41 @@
 }
 
 ::ng-deep .premium-dashboard-dropdown .p-select-option {
-    padding: 0.85rem 1.25rem !important;
+    padding: 0.9rem 1.25rem !important;
     margin: 0 !important;
-    transition: var(--transition) !important;
-    color: var(--navy-900) !important;
+    transition: all 0.2s ease !important;
+    color: #f1f5f9 !important; /* Slate 100 */
     font-size: 0.9rem !important;
     border-radius: 0 !important;
+    background: transparent !important;
 }
 
 ::ng-deep .premium-dashboard-dropdown .p-select-option:hover {
-    background: var(--primary-light) !important;
-    color: var(--primary) !important;
+    background: #1e293b !important; /* Navy 800 */
+    color: #3b82f6 !important; /* Blue 500 */
 }
 
 ::ng-deep .premium-dashboard-dropdown .p-select-option-selected {
-    background: var(--primary) !important;
-    color: #ffffff !important;
+    background: rgba(37, 99, 235, 0.2) !important;
+    color: #3b82f6 !important;
 }
 
 ::ng-deep .premium-dashboard-dropdown .p-select-option-selected .text-primary {
-    color: #ffffff !important; /* White icon when selected */
+    color: #3b82f6 !important;
 }
 
 ::ng-deep .premium-dashboard-dropdown .p-select-header {
-    background: var(--slate-50) !important;
+    background: #111827 !important;
     padding: 0.75rem 1rem !important;
-    border-bottom: 1px solid var(--slate-200) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 ::ng-deep .premium-dashboard-dropdown .p-select-filter-container .p-select-filter {
-    background: var(--white) !important;
-    border: 1px solid var(--slate-200) !important;
+    background: #0f172a !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
     border-radius: 6px !important;
     font-size: 0.85rem !important;
+    color: #fff !important;
 }
 
 .combo-item {
