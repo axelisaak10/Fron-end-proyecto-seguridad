@@ -287,47 +287,60 @@
                             (onChange)="toggleAllPermissions()"></p-checkbox>
                     </div>
 
-                    <div class="permissions-container max-h-[50vh] overflow-y-auto pr-4 custom-scrollbar">
-                        <!-- Categoría: Administración de Grupo -->
-                        <div class="permission-section mb-6">
-                            <h4 class="section-divider flex items-center gap-2 text-navy-900 font-bold text-xs uppercase tracking-widest mb-4">
-                                <i class="pi pi-users text-primary"></i> Administración de Grupo
-                            </h4>
-                            <div class="grid grid-cols-1 gap-3">
-                                @for (perm of getPermissionsByCategory('group'); track perm.nombre) {
-                                <div class="permission-card flex items-start p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-all cursor-pointer"
-                                    (click)="togglePermission(perm.nombre, $event)">
-                                    <p-checkbox [value]="perm.nombre" [(ngModel)]="selectedPermissionsForMember" 
-                                        style="pointer-events:none;" [inputId]="'chk-'+perm.nombre"></p-checkbox>
-                                    <div class="flex flex-col ml-3">
-                                        <span class="font-bold text-navy-900 text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
-                                        <p class="text-[11px] text-slate-500 leading-relaxed mt-0.5">{{ perm.descripcion }}</p>
+                    <p-tabs value="group">
+                        <p-tablist>
+                            <p-tab value="group" class="flex items-center gap-2">
+                                <i class="pi pi-users text-xs"></i> Administración
+                            </p-tab>
+                            <p-tab value="ticket" class="flex items-center gap-2">
+                                <i class="pi pi-ticket text-xs"></i> Flujo de Tickets
+                            </p-tab>
+                        </p-tablist>
+                        
+                        <p-tabpanels class="pt-4">
+                            <p-tabpanel value="group">
+                                <div class="permissions-grid custom-scrollbar">
+                                    @for (perm of getPermissionsByCategory('group'); track perm.nombre) {
+                                    <div class="permission-modern-card flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-all cursor-pointer"
+                                        (click)="togglePermission(perm.nombre, $event)">
+                                        <div class="flex items-center gap-3">
+                                            <div class="perm-icon-wrap flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-primary">
+                                                <i [class]="'pi ' + getPermissionIcon(perm.nombre)"></i>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-bold text-navy-900 text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
+                                                <small class="text-[10px] text-slate-400 uppercase tracking-tighter">{{ perm.nombre }}</small>
+                                            </div>
+                                        </div>
+                                        <p-toggleSwitch [ngModel]="isPermissionSelected(perm.nombre)" 
+                                            style="pointer-events:none;"></p-toggleSwitch>
                                     </div>
+                                    }
                                 </div>
-                                }
-                            </div>
-                        </div>
+                            </p-tabpanel>
 
-                        <!-- Categoría: Operaciones de Tickets -->
-                        <div class="permission-section">
-                            <h4 class="section-divider flex items-center gap-2 text-navy-900 font-bold text-xs uppercase tracking-widest mb-4">
-                                <i class="pi pi-ticket text-primary"></i> Flujo de Tickets
-                            </h4>
-                            <div class="grid grid-cols-1 gap-3">
-                                @for (perm of getPermissionsByCategory('ticket'); track perm.nombre) {
-                                <div class="permission-card flex items-start p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-all cursor-pointer"
-                                    (click)="togglePermission(perm.nombre, $event)">
-                                    <p-checkbox [value]="perm.nombre" [(ngModel)]="selectedPermissionsForMember" 
-                                        style="pointer-events:none;" [inputId]="'chk-'+perm.nombre"></p-checkbox>
-                                    <div class="flex flex-col ml-3">
-                                        <span class="font-bold text-navy-900 text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
-                                        <p class="text-[11px] text-slate-500 leading-relaxed mt-0.5">{{ perm.descripcion }}</p>
+                            <p-tabpanel value="ticket">
+                                <div class="permissions-grid custom-scrollbar">
+                                    @for (perm of getPermissionsByCategory('ticket'); track perm.nombre) {
+                                    <div class="permission-modern-card flex items-center justify-between p-3 border border-slate-100 rounded-xl hover:bg-slate-50 transition-all cursor-pointer"
+                                        (click)="togglePermission(perm.nombre, $event)">
+                                        <div class="flex items-center gap-3">
+                                            <div class="perm-icon-wrap flex items-center justify-center w-10 h-10 rounded-lg bg-primary-light text-primary">
+                                                <i [class]="'pi ' + getPermissionIcon(perm.nombre)"></i>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-bold text-navy-900 text-sm">{{ getPermissionDisplayName(perm.nombre) }}</span>
+                                                <small class="text-[10px] text-slate-400 uppercase tracking-tighter">{{ perm.nombre }}</small>
+                                            </div>
+                                        </div>
+                                        <p-toggleSwitch [ngModel]="isPermissionSelected(perm.nombre)" 
+                                            style="pointer-events:none;"></p-toggleSwitch>
                                     </div>
+                                    }
                                 </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                            </p-tabpanel>
+                        </p-tabpanels>
+                    </p-tabs>
                 }
             </div>
 

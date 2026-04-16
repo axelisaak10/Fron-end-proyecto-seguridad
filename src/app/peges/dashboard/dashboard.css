@@ -115,6 +115,56 @@
     color: rgba(255,255,255,0.9) !important;
 }
 
+/* ======= OVERLAY PANEL (Dropdown List) ======= */
+::ng-deep .premium-dashboard-dropdown {
+    background: #ffffff !important;
+    border: 1px solid var(--slate-200) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-lg) !important;
+    margin-top: 8px !important;
+    overflow: hidden !important;
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-list-container {
+    padding: 0.5rem 0 !important;
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-option {
+    padding: 0.85rem 1.25rem !important;
+    margin: 0 !important;
+    transition: var(--transition) !important;
+    color: var(--navy-900) !important;
+    font-size: 0.9rem !important;
+    border-radius: 0 !important;
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-option:hover {
+    background: var(--primary-light) !important;
+    color: var(--primary) !important;
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-option-selected {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-option-selected .text-primary {
+    color: #ffffff !important; /* White icon when selected */
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-header {
+    background: var(--slate-50) !important;
+    padding: 0.75rem 1rem !important;
+    border-bottom: 1px solid var(--slate-200) !important;
+}
+
+::ng-deep .premium-dashboard-dropdown .p-select-filter-container .p-select-filter {
+    background: var(--white) !important;
+    border: 1px solid var(--slate-200) !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+}
+
 .combo-item {
     display: flex;
     align-items: center;

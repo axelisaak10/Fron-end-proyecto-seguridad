@@ -17,14 +17,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Tooltip } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
-import { TabsModule } from 'primeng/tabs';
-import { TimelineModule } from 'primeng/timeline';
-import { AvatarModule } from 'primeng/avatar';
-import { CheckboxModule } from 'primeng/checkbox';
-import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { EditorModule } from 'primeng/editor';
+import { ToggleSwitch } from 'primeng/toggleswitch';
+import { TabsModule } from 'primeng/tabs';
+import { TabList } from 'primeng/tablist';
+import { Tab } from 'primeng/tab';
+import { TabPanels } from 'primeng/tabpanels';
+import { TabPanel } from 'primeng/tabpanel';
 
 import { PermissionService } from '../../services/permission.service';
 import { AuthService } from '../../services/auth.service';
@@ -95,7 +96,8 @@ export interface TicketItem {
     ToastModule,
     ConfirmDialogModule,
     EditorModule,
-    ProgressSpinner
+    ProgressSpinner,
+    ToggleSwitch
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './group.html',
@@ -1472,6 +1474,24 @@ export class Group implements OnInit, OnDestroy {
 
   getPermissionsByCategory(category: 'group' | 'ticket'): any[] {
     return this.availableGroupPermissions.filter(p => p.nombre.startsWith(category + ':'));
+  }
+
+  getPermissionIcon(permName: string): string {
+    const icons: { [key: string]: string } = {
+      'group:manage': 'pi-cog',
+      'group:edit': 'pi-pencil',
+      'group:delete': 'pi-trash',
+      'group:add:miembro': 'pi-user-plus',
+      'ticket:add': 'pi-plus-circle',
+      'ticket:view': 'pi-search',
+      'ticket:manage': 'pi-sliders-h',
+      'ticket:assign': 'pi-user-edit',
+      'ticket:edit': 'pi-file-edit',
+      'ticket:edit:state': 'pi-directions',
+      'ticket:edit:comment': 'pi-comments',
+      'ticket:delete': 'pi-trash'
+    };
+    return icons[permName] || 'pi-lock';
   }
 
   isPermissionSelected(permissionName: string): boolean {

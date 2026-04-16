@@ -332,51 +332,99 @@
     letter-spacing: 0.05em;
 }
 
-/* ======= PERMISSIONS MODAL ======= */
+/* ======= PERMISSIONS MODAL (PREMIUM) ======= */
+.permissions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem;
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+.permission-modern-card {
+    transition: var(--transition);
+    background: var(--white);
+    border: 1px solid var(--slate-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.permission-modern-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+    background: var(--white);
+    transform: translateY(-2px);
+}
+
+.perm-icon-wrap {
+    transition: var(--transition);
+}
+
+.permission-modern-card:hover .perm-icon-wrap {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* Tabs Styling Override */
+:host ::ng-deep .p-tabs {
+    background: transparent;
+}
+
+:host ::ng-deep .p-tablist {
+    background: var(--slate-50);
+    padding: 0.4rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+    border: 1px solid var(--slate-200);
+}
+
+:host ::ng-deep .p-tab {
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.6rem 1.25rem !important;
+    border-radius: 8px !important;
+    color: var(--slate-500) !important;
+    transition: var(--transition);
+    border: none !important;
+}
+
+:host ::ng-deep .p-tab-active {
+    background: var(--white) !important;
+    color: var(--primary) !important;
+    box-shadow: var(--shadow-sm);
+}
+
+:host ::ng-deep .p-tab-ink-bar {
+    display: none !important;
+}
+
+/* ToggleSwitch Styling */
+:host ::ng-deep .p-toggleswitch {
+    width: 2.8rem;
+    height: 1.5rem;
+}
+
+:host ::ng-deep .p-toggleswitch .p-toggleswitch-slider {
+    background: var(--slate-200);
+}
+
+:host ::ng-deep .p-toggleswitch-checked .p-toggleswitch-slider {
+    background: var(--primary);
+}
+
 .permission-meta {
     background: var(--primary-light);
     border: 1px solid rgba(37, 99, 235, 0.1);
 }
 
-.permission-card {
-    transition: var(--transition);
-    background: var(--white);
-}
-
-.permission-card:hover {
-    border-color: var(--primary) !important;
-    background: var(--slate-50);
-    transform: translateX(4px);
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.02);
-}
-
-.section-divider {
-    border-left: 3px solid var(--primary);
-    padding-left: 0.75rem;
-    margin-top: 1.5rem;
-}
-
-.permissions-container {
-    max-height: 450px;
-    border: 1px solid var(--slate-50);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    background: white;
-}
-
-/* Custom Scrollbar for Modal */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: var(--slate-50);
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--slate-200);
-    border-radius: 10px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--slate-400);
+@media (max-width: 640px) {
+    .permissions-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Responsive Table Adjustments */

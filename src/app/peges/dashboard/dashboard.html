@@ -19,6 +19,8 @@
           placeholder="Estadísticas Globales" 
           [showClear]="true" 
           dropdownIcon="pi pi-chevron-down"
+          panelStyleClass="premium-dashboard-dropdown"
+          appendTo="body"
           (onChange)="onGroupChange()">
           <ng-template let-g pTemplate="item">
             <div class="combo-item">
