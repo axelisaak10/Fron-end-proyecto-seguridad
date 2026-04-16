@@ -308,27 +308,24 @@
     color: #ef4444;
 }
 
-/* ======= DIALOGS ======= */
-:host ::ng-deep .p-dialog {
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
+/* ======= PREMIUM DIALOGS (MIDNIGHT OPERATIONS) ======= */
+::ng-deep .premium-midnight-dialog .p-dialog-header {
+    background: #0f172a !important; /* Navy 900 */
+    color: #f8fafc !important; /* Slate 50 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 1.5rem 2rem !important;
 }
 
-:host ::ng-deep .p-dialog-header {
-    background: var(--white) !important;
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid var(--slate-200);
+::ng-deep .premium-midnight-dialog .p-dialog-content {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+    padding: 2rem !important;
 }
 
-:host ::ng-deep .p-dialog-title {
-    font-weight: 800;
-    color: var(--navy-900);
-}
-
-:host ::ng-deep .p-dialog-content {
-    background: var(--white) !important;
-    padding: 2rem;
+::ng-deep .premium-midnight-dialog .p-dialog-footer {
+    background: #0f172a !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 1.25rem 2rem !important;
 }
 
 .dialog-form {
@@ -340,15 +337,78 @@
 .form-row, .form-col {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.65rem;
 }
 
 .dialog-form label {
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 0.7rem;
+    font-weight: 800;
     text-transform: uppercase;
-    color: var(--slate-500);
-    letter-spacing: 0.05em;
+    color: #64748b; /* Slate 500 */
+    letter-spacing: 0.08em;
+}
+
+/* Premium Inputs */
+::ng-deep .premium-midnight-dialog input.p-inputtext,
+::ng-deep .premium-midnight-dialog .p-select,
+::ng-deep .premium-midnight-dialog .p-datepicker-input {
+    background: #1e293b !important; /* Navy 800 */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f1f5f9 !important;
+    border-radius: 12px !important;
+    padding: 0.75rem 1rem !important;
+    transition: all 0.2s ease !important;
+}
+
+::ng-deep .premium-midnight-dialog .p-select .p-select-label {
+    color: #f1f5f9 !important;
+}
+
+::ng-deep .premium-midnight-dialog input.p-inputtext:focus,
+::ng-deep .premium-midnight-dialog .p-select:focus-within {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Rich Text Editor (Quill) Dark Theme */
+::ng-deep .premium-midnight-dialog .p-editor-container .ql-toolbar {
+    background: #1e293b !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    color: #f1f5f9 !important;
+}
+
+::ng-deep .premium-midnight-dialog .p-editor-container .ql-container {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+    color: #cbd5e1 !important;
+}
+
+::ng-deep .premium-midnight-dialog .ql-stroke {
+    stroke: #94a3b8 !important;
+}
+
+::ng-deep .premium-midnight-dialog .ql-picker {
+    color: #94a3b8 !important;
+}
+
+/* Buttons Glow Effect */
+::ng-deep .premium-midnight-dialog .p-button-primary {
+    background: #2563eb !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+    font-weight: 700 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 10px !important;
+}
+
+::ng-deep .premium-midnight-dialog .p-button-primary:hover {
+    background: #1d4ed8 !important;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5) !important;
+    transform: translateY(-1px);
 }
 
 /* Chat Bubbles Style */
