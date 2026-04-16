@@ -311,14 +311,14 @@
 /* ======= PREMIUM DIALOGS (MIDNIGHT OPERATIONS) ======= */
 ::ng-deep .premium-midnight-dialog .p-dialog-header {
     background: #0f172a !important; /* Navy 900 */
-    color: #f8fafc !important; /* Slate 50 */
+    color: #ffffff !important; /* Pure White */
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     padding: 1.5rem 2rem !important;
 }
 
 ::ng-deep .premium-midnight-dialog .p-dialog-content {
     background: #0f172a !important;
-    color: #f1f5f9 !important;
+    color: #ffffff !important;
     padding: 2rem !important;
 }
 
@@ -354,14 +354,14 @@
 ::ng-deep .premium-midnight-dialog .p-datepicker-input {
     background: #1e293b !important; /* Navy 800 */
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #f1f5f9 !important;
+    color: #ffffff !important; /* Pure White */
     border-radius: 12px !important;
     padding: 0.75rem 1rem !important;
     transition: all 0.2s ease !important;
 }
 
 ::ng-deep .premium-midnight-dialog .p-select .p-select-label {
-    color: #f1f5f9 !important;
+    color: #ffffff !important;
 }
 
 ::ng-deep .premium-midnight-dialog input.p-inputtext:focus,

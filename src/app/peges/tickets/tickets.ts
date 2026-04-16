@@ -313,6 +313,17 @@ export class Tickets implements OnInit, OnDestroy {
            (this.selectedGroupId ? this.isCreatorOfGroup(this.selectedGroupId) : false);
   }
 
+  canCreateTicket(): boolean {
+    // 1. Superadmin tiene acceso total
+    if (this.isAdmin()) return true;
+    
+    // 2. El creador del grupo seleccionado puede crear tickets
+    if (this.selectedGroupId && this.isCreatorOfGroup(this.selectedGroupId)) return true;
+    
+    // 3. Poseedores del permiso específico ticket:add
+    return this.ps.hasAnyPermission('ticket:add');
+  }
+
   getMoveTooltip(ticket: TicketItem): string {
     if (this.canMoveTicket(ticket)) return 'Arrastra para cambiar estado';
     if (!ticket.asignadoId) return 'Ticket sin asignar — solo un admin puede moverlo';
