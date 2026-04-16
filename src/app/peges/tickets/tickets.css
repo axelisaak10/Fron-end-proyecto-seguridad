@@ -348,20 +348,26 @@
     letter-spacing: 0.08em;
 }
 
-/* Premium Inputs */
+/* Premium Inputs (High Contrast) */
 ::ng-deep .premium-midnight-dialog input.p-inputtext,
 ::ng-deep .premium-midnight-dialog .p-select,
 ::ng-deep .premium-midnight-dialog .p-datepicker-input {
-    background: #1e293b !important; /* Navy 800 */
+    background: #e2e8f0 !important; /* Silver / Slate 200 */
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important; /* Pure White */
+    color: #000000 !important; /* Pure Black for max legibility */
     border-radius: 12px !important;
     padding: 0.75rem 1rem !important;
     transition: all 0.2s ease !important;
+    font-weight: 600 !important;
 }
 
 ::ng-deep .premium-midnight-dialog .p-select .p-select-label {
-    color: #ffffff !important;
+    color: #000000 !important;
+}
+
+::ng-deep .premium-midnight-dialog .p-inputtext::placeholder,
+::ng-deep .premium-midnight-dialog .p-select-placeholder {
+    color: #64748b !important; /* Slate 500 */
 }
 
 ::ng-deep .premium-midnight-dialog input.p-inputtext:focus,
@@ -370,29 +376,29 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
 }
 
-/* Rich Text Editor (Quill) Dark Theme */
+/* Rich Text Editor (Quill) High Contrast Theme */
 ::ng-deep .premium-midnight-dialog .p-editor-container .ql-toolbar {
-    background: #1e293b !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: #cbd5e1 !important; /* Slate 300 */
+    border-color: rgba(0, 0, 0, 0.1) !important;
     border-top-left-radius: 12px !important;
     border-top-right-radius: 12px !important;
-    color: #f1f5f9 !important;
+    color: #000000 !important;
 }
 
 ::ng-deep .premium-midnight-dialog .p-editor-container .ql-container {
-    background: rgba(15, 23, 42, 0.6) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: #ffffff !important; /* Pure White background for writing */
+    border-color: rgba(0, 0, 0, 0.1) !important;
     border-bottom-left-radius: 12px !important;
     border-bottom-right-radius: 12px !important;
-    color: #cbd5e1 !important;
+    color: #000000 !important; /* Pure Black text */
 }
 
 ::ng-deep .premium-midnight-dialog .ql-stroke {
-    stroke: #94a3b8 !important;
+    stroke: #000000 !important;
 }
 
 ::ng-deep .premium-midnight-dialog .ql-picker {
-    color: #94a3b8 !important;
+    color: #000000 !important;
 }
 
 /* Buttons Glow Effect */
