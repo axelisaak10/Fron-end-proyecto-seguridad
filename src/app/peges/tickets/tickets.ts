@@ -407,7 +407,11 @@ export class Tickets implements OnInit, OnDestroy {
         next: () => {
           this.loadTickets();
           this.showTicketDialog = false;
-          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Ticket actualizado' });
+          this.messageService.add({ 
+            severity: 'success', 
+            summary: 'Cambios Guardados', 
+            detail: 'La información del ticket ha sido actualizada correctamente.' 
+          });
         },
         error: err => console.error('Error', err)
       });
@@ -416,7 +420,11 @@ export class Tickets implements OnInit, OnDestroy {
         next: () => {
           this.loadTickets();
           this.showTicketDialog = false;
-          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Ticket creado' });
+          this.messageService.add({ 
+            severity: 'success', 
+            summary: 'Ticket Registrado', 
+            detail: 'El nuevo ticket ha sido publicado exitosamente en el tablero.' 
+          });
         },
         error: err => console.error('Error', err)
       });
@@ -427,7 +435,11 @@ export class Tickets implements OnInit, OnDestroy {
     this.http.put(`${this.apiUrl}/tickets/${ticket.id}/estado`, { estado_id: newStatusId }, { withCredentials: true }).subscribe({
       next: () => {
         this.loadTickets();
-        this.messageService.add({ severity: 'success', summary: 'Estado actualizado', detail: `Se movió el ticket` });
+        this.messageService.add({ 
+          severity: 'success', 
+          summary: 'Estado Actualizado', 
+          detail: 'El flujo de trabajo ha sido sincronizado correctamente.' 
+        });
       },
       error: err => console.error("Error updating ticket status", err)
     });
@@ -443,7 +455,11 @@ export class Tickets implements OnInit, OnDestroy {
         this.http.delete(`${this.apiUrl}/tickets/${ticket.id}`, { withCredentials: true }).subscribe({
           next: () => {
             this.loadTickets();
-            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Ticket eliminado' });
+            this.messageService.add({ 
+              severity: 'success', 
+              summary: 'Ticket Removido', 
+              detail: 'El registro ha sido eliminado del sistema permanentemente.' 
+            });
           }
         });
       }

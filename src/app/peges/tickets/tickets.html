@@ -2,44 +2,44 @@
     <p-toast position="top-right"></p-toast>
     <p-confirmDialog></p-confirmDialog>
 
-    <!-- Top header con selector de grupo -->
-    <div class="tickets-header">
+    <!-- Professional Header -->
+    <header class="tickets-header animate__animated animate__fadeIn">
         <div class="header-left">
             <i class="pi pi-ticket header-icon"></i>
             <div class="header-titles">
-                <h1>Tablero Kanban</h1>
-                <p>Gestión de incidencias y tickets interactivos</p>
+                <h1>Tablero Operativo</h1>
+                <p>Monitoreo y gestión de flujo de trabajo en tiempo real</p>
             </div>
         </div>
 
         <div class="header-right">
             <div class="group-selector">
-                <span class="selector-label">Grupo Activo:</span>
+                <span class="selector-label">Equipo:</span>
                 <p-select [options]="allGroups" [(ngModel)]="selectedGroupId" optionLabel="nombre" optionValue="id"
-                    placeholder="Seleccione un Grupo" styleClass="group-dropdown" (onChange)="onGroupChange()">
+                    placeholder="Seleccionar Equipo" styleClass="group-dropdown" (onChange)="onGroupChange()" appendTo="body">
                     <ng-template let-g pTemplate="item">
-                        <div class="group-item">
-                            <i class="pi pi-users"></i>
-                            <span>{{ g.nombre }}</span>
+                        <div class="flex items-center gap-2">
+                            <i class="pi pi-users text-primary"></i>
+                            <span class="font-medium">{{ g.nombre }}</span>
                         </div>
                     </ng-template>
                 </p-select>
             </div>
             @if (selectedGroupId) {
-            <p-button icon="pi pi-plus" label="Nuevo Ticket" severity="success" (onClick)="openNewTicket()" />
+                <p-button icon="pi pi-plus" label="Crear Ticket" severity="primary" (onClick)="openNewTicket()" raised />
             }
         </div>
-    </div>
+    </header>
 
-    <!-- Contenido Principal: Board Kanban -->
+    <!-- Kanban Content Area -->
     @if (!selectedGroupId) {
-    <div class="empty-state">
-        <i class="pi pi-search"></i>
-        <h2>Selecciona un Grupo</h2>
-        <p>Por favor selecciona un grupo del menú superior para cargar el tablero Kanban.</p>
+    <div class="empty-state animate__animated animate__fadeIn">
+        <i class="pi pi-folder-open"></i>
+        <h2>Selecciona un Equipo</h2>
+        <p>Elige un grupo de trabajo para visualizar el flujo de sus tareas y tickets.</p>
     </div>
     } @else {
-    <div class="board-wrapper">
+    <div class="board-wrapper animate__animated animate__fadeInUp">
         <div class="kanban-board">
             @for (col of estadoOptions; track col.value) {
             <div class="kanban-column"
@@ -48,23 +48,22 @@
                 (dragleave)="onDragLeave($event)"
                 (drop)="onDrop($event, col.value)">
                 
-                <div class="kanban-column-header">
+                <header class="kanban-column-header">
                     <div class="column-title-wrapper">
                         <span class="status-indicator" [ngClass]="'status-' + col.value"></span>
                         <h3 class="kanban-column-title">{{ col.label }}</h3>
                     </div>
                     <span class="kanban-column-count">{{ getGroupTicketsByStatus(col.value).length }}</span>
-                </div>
+                </header>
 
-                <div class="kanban-column-body">
+                <div class="kanban-column-body" [id]="col.value">
                     @for (ticket of getGroupTicketsByStatus(col.value); track ticket.id) {
-                    <div class="kanban-card"
+                    <article class="kanban-card"
                         [ngClass]="{
                             'kanban-card-Urgente':  ticket.prioridad === 'Urgente',
                             'kanban-card-Alta':     ticket.prioridad === 'Alta',
                             'kanban-card-Media':    ticket.prioridad === 'Media',
                             'kanban-card-Baja':     ticket.prioridad === 'Baja',
-                            'kanban-card-Mínima':   ticket.prioridad === 'Mínima',
                             'mine-ticket':          ticket.asignadoId === currentUserId,
                             'locked-ticket':        !canMoveTicket(ticket)
                         }"
@@ -72,70 +71,66 @@
                         (dragstart)="onDragStart($event, ticket)"
                         (dragend)="onDragEnd($event)">
 
-                        <!-- Header: título + indicador de arrastre -->
-                        <div class="kanban-card-header">
-                            <span class="kanban-card-title">{{ ticket.titulo }}</span>
-                            <span class="drag-indicator"
-                                [pTooltip]="getMoveTooltip(ticket)" tooltipPosition="left">
+                        <header class="kanban-card-header">
+                            <h4 class="kanban-card-title">{{ ticket.titulo }}</h4>
+                            <span class="drag-indicator" [pTooltip]="getMoveTooltip(ticket)" tooltipPosition="left">
                                 @if (canMoveTicket(ticket)) {
-                                    <i class="pi pi-arrows-alt drag-handle"></i>
+                                    <i class="pi pi-bars cursor-grab"></i>
                                 } @else {
-                                    <i class="pi pi-lock lock-icon"></i>
+                                    <i class="pi pi-lock text-slate-300"></i>
                                 }
                             </span>
-                        </div>
+                        </header>
 
-                        <!-- Asignado a: visible siempre -->
                         <div class="kanban-card-assignee-row">
                             <p-avatar
                                 [label]="ticket.asignadoA ? ticket.asignadoA.charAt(0).toUpperCase() : '?'"
                                 shape="circle"
                                 size="normal"
-                                [ngStyle]="{
-                                    'background-color': ticket.asignadoId === currentUserId ? '#10b981' : (ticket.asignadoA ? '#3b82f6' : '#9ca3af'),
-                                    'color': '#fff'
+                                [style]="{
+                                    'background-color': ticket.asignadoId === currentUserId ? 'var(--primary)' : (ticket.asignadoA ? 'var(--slate-200)' : 'var(--slate-100)'),
+                                    'color': ticket.asignadoId === currentUserId ? 'white' : 'var(--slate-600)',
+                                    'font-weight': '700',
+                                    'font-size': '0.75rem'
                                 }">
                             </p-avatar>
                             <span class="assignee-name" [ngClass]="{'assignee-me': ticket.asignadoId === currentUserId}">
-                                {{ ticket.asignadoId === currentUserId ? 'Tú' : (ticket.asignadoA || 'Sin asignar') }}
+                                {{ ticket.asignadoId === currentUserId ? 'Asignado a ti' : (ticket.asignadoA || 'Sin asignar') }}
                             </span>
                         </div>
 
-                        <!-- Descripción -->
                         <div class="kanban-card-content">
-                            <div class="kanban-card-desc" [innerHTML]="ticket.descripcion"></div>
+                            <p class="kanban-card-desc" [innerHTML]="ticket.descripcion"></p>
                         </div>
 
-                        <!-- Meta inferior -->
-                        <div class="kanban-card-meta">
-                            <div class="meta-bottom">
-                                <p-tag [value]="ticket.prioridad" [severity]="getPrioridadSeverity(ticket.prioridad)" class="priority-tag" [rounded]="true" />
-                            </div>
-
-                            <div class="meta-footer">
-                                <span class="date-due"
-                                    [ngStyle]="{'color': ticket.fechaLimite && ticket.fechaLimite < today ? '#ef4444' : '#6b7280'}">
-                                    <i class="pi pi-calendar"></i>
-                                    {{ ticket.fechaLimite ? (ticket.fechaLimite | date:'dd/MM') : '--/--' }}
+                        <footer class="meta-footer">
+                            <p-tag [value]="ticket.prioridad" [severity]="getPrioridadSeverity(ticket.prioridad)" [rounded]="true" styleClass="text-[10px]" />
+                            
+                            <div class="flex items-center gap-3">
+                                <span class="date-due" [class.overdue]="ticket.fechaLimite && ticket.fechaLimite < today">
+                                    <i class="pi pi-calendar-times"></i>
+                                    {{ ticket.fechaLimite ? (ticket.fechaLimite | date:'dd MMM') : '--' }}
                                 </span>
-                                <div class="kanban-card-actions">
-                                    <p-button icon="pi pi-comments" [text]="true" [rounded]="true"
-                                        severity="secondary" size="small"
-                                        (onClick)="openTicketDetails(ticket)" pTooltip="Ver / Comentar" />
+                                <div class="flex gap-1">
+                                    <p-button icon="pi pi-comment" [text]="true" [rounded]="true" severity="secondary" 
+                                        pTooltip="Discusión" (onClick)="openTicketDetails(ticket)" />
                                     @if (canFullEditTicketInGroup(ticket)) {
-                                    <p-button icon="pi pi-pencil" [text]="true" [rounded]="true"
-                                        severity="info" size="small"
-                                        (onClick)="editTicket(ticket)" pTooltip="Editar" />
+                                        <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" 
+                                            pTooltip="Editar" (onClick)="editTicket(ticket)" />
                                     }
                                     @if (canDeleteTicket()) {
-                                    <p-button icon="pi pi-trash" [text]="true" [rounded]="true"
-                                        severity="danger" size="small"
-                                        (onClick)="deleteTicket(ticket)" pTooltip="Eliminar" />
+                                        <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" 
+                                            pTooltip="Eliminar" (onClick)="deleteTicket(ticket)" />
                                     }
                                 </div>
                             </div>
+                        </footer>
+                    </article>
+                    } @empty {
+                        <div class="flex flex-col items-center justify-center p-8 opacity-20">
+                            <i class="pi pi-check-circle text-2xl"></i>
+                            <span class="text-xs font-bold mt-2 uppercase tracking-widest">Vacío</span>
                         </div>
-                    </div>
                     }
                 </div>
             </div>
@@ -145,125 +140,146 @@
     }
 </div>
 
-<!-- Modal Creacion/Edicion Ticket -->
-<p-dialog [(visible)]="showTicketDialog" [header]="ticketEditMode ? 'Editar Ticket' : 'Crear Ticket'"
-    [modal]="true" [draggable]="false" [resizable]="false" styleClass="ticket-dialog"
-    [style]="{ width: '680px' }">
-    <div class="dialog-form">
+<!-- Modal: Creación/Edición -->
+<p-dialog [(visible)]="showTicketDialog" [header]="ticketEditMode ? 'Actualizar Ticket' : 'Nuevo Registro de Ticket'"
+    [modal]="true" [draggable]="false" [resizable]="false" styleClass="p-fluid"
+    [style]="{ width: '650px' }">
+    
+    <div class="dialog-form pt-4">
         <div class="form-row">
-            <label for="t-titulo">Título del Ticket</label>
-            <input id="t-titulo" pInputText [(ngModel)]="selectedTicket.titulo" placeholder="Ej. Bug de red"
-                class="form-input p-inputtext-lg" />
+            <label for="t-titulo">Título Descriptivo</label>
+            <input id="t-titulo" pInputText [(ngModel)]="selectedTicket.titulo" placeholder="Breve resumen del incidente..." />
         </div>
-        <div class="form-row-two">
+        
+        <div class="grid grid-cols-2 gap-4">
             <div class="form-col">
-                <label for="t-prioridad">Prioridad</label>
+                <label for="t-prioridad">Nivel de Prioridad</label>
                 <p-select id="t-prioridad" [options]="prioridadOptions" [(ngModel)]="selectedTicket.prioridadId"
-                    placeholder="Prioridad" styleClass="form-input w-full" appendTo="body" />
+                    placeholder="Prioridad" appendTo="body" />
             </div>
             <div class="form-col">
-                <label for="t-estado">Estado Actual</label>
+                <label for="t-estado">Estado del Flujo</label>
                 <p-select id="t-estado" [options]="estadoOptions" [(ngModel)]="selectedTicket.estadoId"
-                    placeholder="Estado" styleClass="form-input w-full" appendTo="body" />
+                    placeholder="Estado" appendTo="body" />
             </div>
         </div>
-        <div class="form-row-two">
+
+        <div class="grid grid-cols-2 gap-4">
             <div class="form-col">
-                <label for="t-assign">Asignar a Integrante</label>
+                <label for="t-assign">Miembro Responsable</label>
                 <p-select id="t-assign" [options]="groupMembers" [(ngModel)]="selectedTicket.asignadoId"
-                    optionLabel="nombre" optionValue="usuario_id" placeholder="Seleccionar" 
-                    [showClear]="true" styleClass="form-input w-full" appendTo="body" />
+                    optionLabel="nombre" optionValue="usuario_id" placeholder="Asignar a..." 
+                    [showClear]="true" appendTo="body" />
             </div>
             <div class="form-col">
-                <label for="t-date">Fecha Límite</label>
+                <label for="t-date">Fecha de Compromiso</label>
                 <p-datepicker id="t-date" [(ngModel)]="selectedTicket.fechaLimite" dateFormat="dd/mm/yy"
-                    [showIcon]="true" styleClass="form-input w-full" appendTo="body" />
+                    [showIcon]="true" appendTo="body" />
             </div>
         </div>
+
         <div class="form-row">
-            <label for="t-descripcion">Descripción extendida</label>
+            <label for="t-descripcion">Especificaciones Técnicas</label>
             <p-editor id="t-descripcion" [(ngModel)]="selectedTicket.descripcion"
-                [style]="{ height: '240px' }"
-                placeholder="Incluye detalles técnicos, formatos y referencias...">
+                [style]="{ height: '200px' }"
+                placeholder="Detalla el problema, pasos para reproducir o referencias...">
             </p-editor>
         </div>
     </div>
+
     <ng-template #footer>
-        <div class="dialog-footer">
-            <p-button label="Cancelar" icon="pi pi-times" severity="secondary" [text]="true"
-                (onClick)="showTicketDialog = false" />
-            <p-button [label]="ticketEditMode ? 'Actualizar' : 'Guardar Ticket'"
-                [icon]="ticketEditMode ? 'pi pi-check' : 'pi pi-save'" severity="success" (onClick)="saveTicket()" />
+        <div class="flex justify-end gap-2 pt-4">
+            <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="showTicketDialog = false" />
+            <p-button [label]="ticketEditMode ? 'Actualizar Ticket' : 'Publicar Ticket'" 
+                icon="pi {{ ticketEditMode ? 'pi-check' : 'pi-send' }}" severity="primary" (onClick)="saveTicket()" />
         </div>
     </ng-template>
 </p-dialog>
 
-<!-- Modal Detalles y Comentarios -->
-<p-dialog [(visible)]="showTicketDetailsDialog" header="Panel de Ticket" [modal]="true" [draggable]="false"
-    [resizable]="false" styleClass="ticket-dialog" [style]="{ width: '80vw', 'max-width': '1000px', height: '80vh' }">
+<!-- Modal: Panel de Control del Ticket (Historial y Comentarios) -->
+<p-dialog [(visible)]="showTicketDetailsDialog" [modal]="true" [draggable]="false" [resizable]="false" 
+    [style]="{ width: '90vw', 'max-width': '1100px', height: '85vh' }">
+    
+    <ng-template #header>
+        <div class="flex flex-col">
+            <span class="font-bold text-xl text-navy-900">Seguimiento de Ticket</span>
+            <span class="text-sm text-slate-500">ID: {{ selectedTicketDetails?.id | slice:0:8 }} — {{ selectedTicketDetails?.titulo }}</span>
+        </div>
+    </ng-template>
+
     @if (selectedTicketDetails) {
-    <div class="ticket-details-layout">
-        <!-- Izquierda: Historial -->
-        <div class="ticket-history-panel">
-            <h3 class="panel-subtitle"><i class="pi pi-history"></i> Historial de Cambios</h3>
-            <div class="timeline-container">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+        <!-- Historial -->
+        <div class="flex flex-col h-full overflow-hidden">
+            <h3 class="panel-subtitle"><i class="pi pi-history"></i> Línea de Tiempo</h3>
+            <div class="flex-1 overflow-y-auto pr-4">
                 @if (isDetailsLoading) {
-                <div class="loading-state">
-                    <i class="pi pi-spin pi-spinner"></i>
-                    <span>Cargando historial...</span>
-                </div>
+                    <div class="loading-state h-full flex items-center justify-center">
+                        <i class="pi pi-spin pi-spinner text-4xl text-slate-200"></i>
+                    </div>
                 } @else {
-                <p-timeline [value]="ticketHistory" align="alternate" styleClass="customized-timeline">
-                    <ng-template pTemplate="marker" let-event>
-                        <span class="custom-marker p-shadow-2"
-                            [ngStyle]="{'background-color': event.tipo_cambio === 'creado' ? '#10b981' : '#3b82f6'}">
-                            <i [ngClass]="event.tipo_cambio === 'creado' ? 'pi pi-star' : 'pi pi-pencil'"></i>
-                        </span>
-                    </ng-template>
-                    <ng-template pTemplate="content" let-event>
-                        <p-card [header]="event.usuarios?.nombre_completo || 'Sistema'"
-                            [subheader]="(event.fecha_cambio | date:'dd/MM/yyyy HH:mm') || ''">
-                            <p class="timeline-desc">{{ event.descripcion }}</p>
-                        </p-card>
-                    </ng-template>
-                </p-timeline>
-                @if (ticketHistory.length === 0) {
-                <p class="empty-text">No hay historial registrado.</p>
-                }
+                    <p-timeline [value]="ticketHistory" styleClass="customized-timeline">
+                        <ng-template pTemplate="marker" let-event>
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm text-white"
+                                [ngStyle]="{'background-color': event.tipo_cambio === 'creado' ? '#10b981' : '#3b82f6'}">
+                                <i [ngClass]="event.tipo_cambio === 'creado' ? 'pi pi-plus' : 'pi pi-sync'" class="text-xs"></i>
+                            </span>
+                        </ng-template>
+                        <ng-template pTemplate="content" let-event>
+                            <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl mb-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="font-bold text-navy-900 text-sm">{{ event.usuarios?.nombre_completo || 'Sistema' }}</span>
+                                    <small class="text-slate-400 font-medium">{{ event.fecha_cambio | date:'dd/MM HH:mm' }}</small>
+                                </div>
+                                <p class="text-slate-600 text-sm leading-relaxed">{{ event.descripcion }}</p>
+                            </div>
+                        </ng-template>
+                    </p-timeline>
+                    @if (ticketHistory.length === 0) {
+                        <div class="flex flex-col items-center justify-center h-full opacity-30">
+                            <i class="pi pi-history text-5xl"></i>
+                            <p class="mt-4 font-bold uppercase tracking-tighter">Sin registros</p>
+                        </div>
+                    }
                 }
             </div>
         </div>
 
-        <!-- Derecha: Comentarios -->
-        <div class="ticket-comments-panel">
-            <h3 class="panel-subtitle"><i class="pi pi-comments"></i> Discusión</h3>
-            <div class="comments-list">
+        <!-- Comentarios -->
+        <div class="flex flex-col h-full overflow-hidden border-l border-slate-100 lg:pl-8">
+            <h3 class="panel-subtitle"><i class="pi pi-comments"></i> Mesa de Discusión</h3>
+            <div class="comments-list flex-1">
                 @for (comment of ticketComments; track comment.id) {
-                <div class="comment-item"
+                <div class="comment-item flex items-end gap-3 mb-4"
                     [class.comment-mine]="comment.usuario_obj?.id === currentUserId">
-                    <div class="comment-avatar">
-                        <p-avatar [label]="(comment.usuario_obj?.nombre_completo || '?').charAt(0).toUpperCase()" shape="circle" styleClass="mr-2" size="large"></p-avatar>
-                    </div>
+                    
+                    @if (comment.usuario_obj?.id !== currentUserId) {
+                        <p-avatar [label]="(comment.usuario_obj?.nombre_completo || '?').charAt(0).toUpperCase()" 
+                            shape="circle" styleClass="flex-shrink-0" [style]="{'background-color': 'var(--slate-200)'}"></p-avatar>
+                    }
+                    
                     <div class="comment-bubble">
-                        <div class="comment-header">
-                            <span class="comment-author">{{ comment.usuario_obj?.nombre_completo }}</span>
-                            <span class="comment-date">{{ comment.creado_en | date:'short' }}</span>
+                        <div class="flex flex-col">
+                            <div class="flex justify-between gap-4 mb-1">
+                                <span class="comment-author">{{ comment.usuario_obj?.nombre_completo }}</span>
+                                <span class="comment-date text-[10px]">{{ comment.creado_en | date:'shortTime' }}</span>
+                            </div>
+                            <div class="comment-text text-sm">{{ comment.contenido }}</div>
                         </div>
-                        <div class="comment-text">{{ comment.contenido }}</div>
                     </div>
                 </div>
                 } @empty {
-                <div class="empty-comments">
-                    <i class="pi pi-inbox"></i>
-                    <p>No hay comentarios en este ticket aún.</p>
-                </div>
+                    <div class="flex flex-col items-center justify-center h-full opacity-30">
+                        <i class="pi pi-comments text-5xl"></i>
+                        <p class="mt-4 font-bold uppercase tracking-tighter">Sin actividad</p>
+                    </div>
                 }
             </div>
 
-            <div class="comment-input-area">
-                <textarea pTextarea [(ngModel)]="newCommentText" placeholder="Escribe un comentario..."
-                    [rows]="2" [autoResize]="true"></textarea>
-                <p-button icon="pi pi-send" [rounded]="true" severity="info" (onClick)="addComment()"
+            <div class="flex items-center gap-3 p-4 bg-white border-t border-slate-100">
+                <textarea pTextarea [(ngModel)]="newCommentText" placeholder="Responder al ticket..."
+                    [rows]="1" [autoResize]="true" class="flex-1 shadow-none border-none bg-slate-50 rounded-2xl px-4"></textarea>
+                <p-button icon="pi pi-send" [rounded]="true" severity="primary" (onClick)="addComment()"
                     [disabled]="!newCommentText.trim()" />
             </div>
         </div>
