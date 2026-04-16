@@ -255,41 +255,40 @@
         <p-dialog [(visible)]="showMemberPermissionsDialog" 
             header="Permisos de {{ selectedMemberForPermissions?.nombre }}" 
             [modal]="true" [draggable]="false" [resizable]="false" 
-            styleClass="group-dialog" [style]="{ width: '500px' }">
+            styleClass="permissions-dialog" [style]="{ width: '500px' }">
             
-            <div class="permissions-container" style="padding-top:1rem;">
+            <div class="permissions-container">
                 @if (isLoadingPermissions) {
-                    <div class="loading-state" style="display:flex;flex-direction:column;align-items:center;padding:2rem;">
-                        <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color:var(--primary-color);"></i>
-                        <p style="margin-top:1rem;">Cargando permisos...</p>
+                    <div class="loading-state">
+                        <i class="pi pi-spin pi-spinner"></i>
+                        <p>Cargando permisos...</p>
                     </div>
                 } @else if (isCreador(selectedMemberForPermissions!)) {
                     <p-message severity="info" text="Este usuario es el creador/administrador del grupo. Cuenta con acceso absoluto local y no se le pueden retirar permisos."></p-message>
                 } @else {
-                    <div class="permissions-list" style="display:flex;flex-direction:column;gap:1.5rem;">
-                        <p class="permissions-subtitle" style="margin:0;font-weight:600;color:var(--text-color);">Selecciona los permisos que tendrá dentro de este grupo:</p>
+                    <div class="permissions-list">
+                        <p class="permissions-subtitle">Selecciona los permisos que tendrá dentro de este grupo:</p>
 
                         <!-- Selector de todos -->
                         <div class="permission-item select-all-row"
-                            (click)="toggleAllPermissions()"
-                            style="display:flex;gap:1rem;padding:0.85rem 1rem;border:2px solid var(--primary-color);border-radius:0.75rem;cursor:pointer;background:var(--primary-50, rgba(99,102,241,0.07));align-items:center;">
+                            (click)="toggleAllPermissions()">
                             <p-checkbox [binary]="true" [ngModel]="allPermissionsSelected" [indeterminate]="somePermissionsSelected" style="pointer-events:none;" inputId="chk-all"></p-checkbox>
-                            <div style="display:flex;flex-direction:column;gap:0.2rem;">
-                                <span style="font-weight:700;color:var(--primary-color);">
+                            <div class="select-all-info">
+                                <span>
                                     {{ allPermissionsSelected ? 'Deseleccionar todos' : 'Seleccionar todos' }}
                                 </span>
-                                <span style="font-size:0.82rem;color:var(--text-color-secondary);">
+                                <span class="select-count">
                                     {{ selectedPermissionsForMember.length }} de {{ availableGroupPermissions.length }} permisos seleccionados
                                 </span>
                             </div>
                         </div>
 
                         @for (perm of availableGroupPermissions; track perm.nombre) {
-                        <div class="permission-item" (click)="togglePermission(perm.nombre, $event)" style="display:flex;gap:1rem;padding:1rem;border:1px solid var(--surface-border);border-radius:0.75rem;cursor:pointer;">
+                        <div class="permission-item" (click)="togglePermission(perm.nombre, $event)">
                             <p-checkbox [value]="perm.nombre" [(ngModel)]="selectedPermissionsForMember" style="pointer-events:none;" [inputId]="'chk-'+perm.nombre"></p-checkbox>
-                            <div class="permission-info" style="display:flex;flex-direction:column;gap:0.3rem;">
-                                <span class="permission-name" style="font-weight:700;">{{ getPermissionDisplayName(perm.nombre) }}</span>
-                                <span class="permission-desc" style="font-size:0.85rem;color:var(--text-color-secondary);">{{ perm.descripcion }}</span>
+                            <div class="permission-info">
+                                <span class="permission-name">{{ getPermissionDisplayName(perm.nombre) }}</span>
+                                <span class="permission-desc">{{ perm.descripcion }}</span>
                             </div>
                         </div>
                         }
@@ -311,37 +310,37 @@
             [style]="{ width: '680px' }">
             <div class="dialog-form">
                 <div class="form-row">
-                    <label for="t-titulo" style="color: white; font-weight: bold; margin-bottom: 0.5rem; display: block;">Título del Ticket</label>
+                    <label for="t-titulo" style="color: #334155; font-weight: 600; margin-bottom: 0.5rem; display: block;">Título del Ticket</label>
                     <input id="t-titulo" pInputText [(ngModel)]="selectedTicket.titulo" placeholder="Ej. Bug de red"
                         class="form-input p-inputtext-lg" style="width: 100%; border-radius: 8px;" />
                 </div>
                 <div class="form-row-two" style="display: flex; gap: 1rem; margin-top: 1rem;">
                     <div class="form-col" style="flex: 1;">
-                        <label for="t-prioridad" style="color: white; margin-bottom: 0.5rem; display: block;">Prioridad</label>
+                        <label for="t-prioridad" style="color: #334155; margin-bottom: 0.5rem; display: block;">Prioridad</label>
                         <p-select id="t-prioridad" [options]="prioridadOptions" [(ngModel)]="selectedTicket.prioridadId"
                             placeholder="Prioridad" styleClass="form-input w-full" appendTo="body" [style]="{ width: '100%' }" />
                     </div>
                     <div class="form-col" style="flex: 1;">
-                        <label for="t-estado" style="color: white; margin-bottom: 0.5rem; display: block;">Estado Actual</label>
+                        <label for="t-estado" style="color: #334155; margin-bottom: 0.5rem; display: block;">Estado Actual</label>
                         <p-select id="t-estado" [options]="estadoOptions" [(ngModel)]="selectedTicket.estadoId"
                             placeholder="Estado" styleClass="form-input w-full" appendTo="body" [style]="{ width: '100%' }" />
                     </div>
                 </div>
                 <div class="form-row-two" style="display: flex; gap: 1rem; margin-top: 1rem;">
                     <div class="form-col" style="flex: 1;">
-                        <label for="t-assign" style="color: white; margin-bottom: 0.5rem; display: block;">Asignar a Integrante</label>
+                        <label for="t-assign" style="color: #334155; margin-bottom: 0.5rem; display: block;">Asignar a Integrante</label>
                         <p-select id="t-assign" [options]="groupMembers" [(ngModel)]="selectedTicket.asignadoId"
                             (onChange)="onAssignedMemberChange($event)" optionLabel="nombreDisplay" optionValue="usuario_id" placeholder="Seleccionar" 
                             [showClear]="true" styleClass="form-input w-full" appendTo="body" [style]="{ width: '100%' }" />
                     </div>
                     <div class="form-col" style="flex: 1;">
-                        <label for="t-date" style="color: white; margin-bottom: 0.5rem; display: block;">Fecha Límite</label>
+                        <label for="t-date" style="color: #334155; margin-bottom: 0.5rem; display: block;">Fecha Límite</label>
                         <p-datepicker id="t-date" [(ngModel)]="selectedTicket.fechaLimite" dateFormat="dd/mm/yy"
                             [showIcon]="true" styleClass="form-input w-full" appendTo="body" [style]="{ width: '100%' }" />
                     </div>
                 </div>
                 <div class="form-row" style="margin-top: 1.5rem;">
-                    <label for="t-descripcion" style="color: white; margin-bottom: 0.5rem; display: block;">Descripción extendida</label>
+                    <label for="t-descripcion" style="color: #334155; margin-bottom: 0.5rem; display: block;">Descripción extendida</label>
                     <p-editor id="t-descripcion" [(ngModel)]="selectedTicket.descripcion"
                         [style]="{ height: '240px', 'background-color': 'white' }"
                         placeholder="Incluye detalles técnicos, formatos y referencias...">

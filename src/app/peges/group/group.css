@@ -2374,6 +2374,22 @@
     background: #fff !important;
 }
 
+:host ::ng-deep .permissions-dialog .p-checkbox-box {
+    border-radius: 4px;
+    border: 2px solid #e2e8f0;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+:host ::ng-deep .permissions-dialog .p-checkbox-box.p-highlight {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+:host ::ng-deep .permissions-dialog .p-checkbox-box.p-highlight .p-checkbox-icon {
+    color: #fff;
+}
+
 .permissions-content {
     display: flex;
     flex-direction: column;
@@ -2490,24 +2506,81 @@
 
 .permission-item {
     display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.65rem 0.85rem;
-    background: rgba(45, 37, 64, 0.5);
-    border: 1px solid rgba(37, 99, 235, 0.08);
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .permission-item:hover {
-    background: rgba(37, 99, 235, 0.08);
-    border-color: rgba(37, 99, 235, 0.15);
+    background: #f8fafc;
+    border-color: #93c5fd;
 }
 
 .permission-item.selected {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.4);
+    background: #ecfdf5;
+    border-color: #10b981;
+}
+
+.permissions-container {
+    padding-top: 1rem;
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.loading-state i {
+    font-size: 2rem;
+    color: #2563eb;
+}
+
+.loading-state p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.permissions-subtitle {
+    margin: 0;
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.permission-item.select-all-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    border: 2px solid #2563eb;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #eff6ff;
+    align-items: center;
+}
+
+.select-all-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.select-all-info > span:first-child {
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.select-count {
+    font-size: 0.82rem;
+    color: #64748b;
 }
 
 .permission-check {
@@ -2540,14 +2613,22 @@
 
 .permission-name {
     font-weight: 600;
-    font-size: 0.85rem;
-    color: #334155;
+    font-size: 0.9rem;
+    color: #1e293b;
 }
 
 .permission-desc {
-    font-size: 0.75rem;
-    color: #8b8fa8;
-    line-height: 1.3;
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.permissions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 350px;
+    overflow-y: auto;
 }
 
 /* Footer */
@@ -2565,17 +2646,17 @@
 }
 
 :host ::ng-deep .permissions-footer .save-perms-btn {
-    background: linear-gradient(135deg, #10b981, #059669) !important;
+    background: #2563eb !important;
     border: none !important;
 }
 
 :host ::ng-deep .permissions-footer .save-perms-btn:hover {
-    background: linear-gradient(135deg, #34d399, #10b981) !important;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+    background: #1d4ed8 !important;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3) !important;
 }
 
 :host ::ng-deep .permissions-footer .save-perms-btn:disabled {
-    background: #4b5563 !important;
+    background: #94a3b8 !important;
     opacity: 0.5;
 }
 
@@ -2654,4 +2735,87 @@
     :host ::ng-deep .permissions-footer .p-button {
         width: 100%;
     }
+}
+
+/* ===== Ticket Dialog — Modal Crear/Editar Ticket ===== */
+:host ::ng-deep .ticket-dialog .p-dialog {
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    border: 1px solid #e2e8f0;
+    background: #fff !important;
+    overflow: hidden;
+    max-width: 680px;
+}
+
+:host ::ng-deep .ticket-dialog .p-dialog-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding: 1.2rem 1.5rem;
+    background: #fff !important;
+}
+
+:host ::ng-deep .ticket-dialog .p-dialog-title {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1.05rem;
+}
+
+:host ::ng-deep .ticket-dialog .p-dialog-header-close {
+    color: #94a3b8 !important;
+}
+:host ::ng-deep .ticket-dialog .p-dialog-header-close:hover {
+    background: #f1f5f9 !important;
+    color: #334155 !important;
+}
+
+:host ::ng-deep .ticket-dialog .p-dialog-content {
+    padding: 1.25rem 1.5rem;
+    background: #fff !important;
+    color: #334155;
+}
+
+:host ::ng-deep .ticket-dialog .p-dialog-footer {
+    border-top: 1px solid #f1f5f9;
+    background: #fff !important;
+    padding: 0.9rem 1.5rem;
+}
+
+:host ::ng-deep .ticket-dialog .dialog-form .p-inputtext,
+:host ::ng-deep .ticket-dialog .dialog-form .p-select {
+    background: #fff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px;
+    color: #0f172a !important;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.9rem;
+}
+
+:host ::ng-deep .ticket-dialog .dialog-form .p-inputtext:focus,
+:host ::ng-deep .ticket-dialog .dialog-form .p-select.p-focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
+}
+
+:host ::ng-deep .ticket-dialog .dialog-form .p-select-label {
+    color: #0f172a !important;
+}
+
+:host ::ng-deep .ticket-dialog .p-editor-container {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+:host ::ng-deep .ticket-dialog .p-editor-content {
+    background: #fff !important;
+}
+
+:host ::ng-deep .ticket-dialog .p-editor-content .ql-editor {
+    color: #0f172a !important;
+    font-size: 0.9rem;
+}
+
+:host ::ng-deep .ticket-dialog .dialog-form label {
+    color: #334155 !important;
+    font-weight: 600;
+    font-size: 0.85rem;
 }
