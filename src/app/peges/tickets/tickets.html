@@ -147,39 +147,39 @@
     
     <div class="dialog-form pt-4">
         <div class="form-row">
-            <label for="t-titulo">Título Descriptivo</label>
+            <label class="text-slate-500 font-bold text-[10px] tracking-widest">TÍTULO DESCRIPTIVO</label>
             <input id="t-titulo" pInputText [(ngModel)]="selectedTicket.titulo" placeholder="Breve resumen del incidente..." />
         </div>
         
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-6">
             <div class="form-col">
-                <label class="text-slate-400">NIVEL DE PRIORIDAD</label>
+                <label class="text-slate-500 font-bold text-[10px] tracking-widest">NIVEL DE PRIORIDAD</label>
                 <p-select id="t-prioridad" [options]="prioridadOptions" [(ngModel)]="selectedTicket.prioridadId"
                     placeholder="Prioridad" appendTo="body" />
             </div>
             <div class="form-col">
-                <label class="text-slate-400">ESTADO DEL FLUJO</label>
+                <label class="text-slate-500 font-bold text-[10px] tracking-widest">ESTADO DEL FLUJO</label>
                 <p-select id="t-estado" [options]="estadoOptions" [(ngModel)]="selectedTicket.estadoId"
                     placeholder="Estado" appendTo="body" />
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-6">
             <div class="form-col">
-                <label class="text-slate-400">MIEMBRO RESPONSABLE</label>
+                <label class="text-slate-500 font-bold text-[10px] tracking-widest">MIEMBRO RESPONSABLE</label>
                 <p-select id="t-assign" [options]="groupMembers" [(ngModel)]="selectedTicket.asignadoId"
                     optionLabel="nombre" optionValue="usuario_id" placeholder="Asignar a..." 
                     [showClear]="true" appendTo="body" />
             </div>
             <div class="form-col">
-                <label class="text-slate-400">FECHA DE COMPROMISO</label>
+                <label class="text-slate-500 font-bold text-[10px] tracking-widest">FECHA DE COMPROMISO</label>
                 <p-datepicker id="t-date" [(ngModel)]="selectedTicket.fechaLimite" dateFormat="dd/mm/yy"
                     [showIcon]="true" appendTo="body" />
             </div>
         </div>
 
         <div class="form-row">
-            <label class="text-slate-400">ESPECIFICACIONES TÉCNICAS (MARKDOWN)</label>
+            <label class="text-slate-500 font-bold text-[10px] tracking-widest">ESPECIFICACIONES TÉCNICAS (MARKDOWN)</label>
             <p-editor id="t-descripcion" [(ngModel)]="selectedTicket.descripcion"
                 [style]="{ height: '200px' }"
                 placeholder="Detalla el problema, pasos para reproducir o referencias...">
