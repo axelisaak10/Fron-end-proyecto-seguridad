@@ -145,6 +145,7 @@
     border-radius: 8px;
     border: 1px solid #e2e8f0;
     font-size: 0.875rem;
+    color: #1e293b;
     transition: border-color 0.15s, box-shadow 0.15s;
     background: #fff;
 }
