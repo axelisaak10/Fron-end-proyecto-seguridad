@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Card } from 'primeng/card';
 import { Tag } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
@@ -24,7 +23,7 @@ interface TicketSummary {
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, Card, Tag, ButtonModule, Tooltip],
+  imports: [CommonModule, Tag, ButtonModule, Tooltip],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

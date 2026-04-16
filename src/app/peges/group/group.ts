@@ -17,15 +17,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Tooltip } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
-import { ToastModule } from 'primeng/toast';
+import { Toast } from 'primeng/toast';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { EditorModule } from 'primeng/editor';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { TabsModule } from 'primeng/tabs';
-import { TabList } from 'primeng/tablist';
-import { Tab } from 'primeng/tab';
-import { TabPanels } from 'primeng/tabpanels';
-import { TabPanel } from 'primeng/tabpanel';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
+import { Timeline } from 'primeng/timeline';
+import { Avatar } from 'primeng/avatar';
+import { Checkbox } from 'primeng/checkbox';
+import { Message } from 'primeng/message';
 
 import { PermissionService } from '../../services/permission.service';
 import { AuthService } from '../../services/auth.service';
@@ -88,16 +88,20 @@ export interface TicketItem {
     Tooltip,
     DatePickerModule,
     SelectModule,
-    TabsModule,
-    TimelineModule,
-    AvatarModule,
-    CheckboxModule,
-    MessageModule,
-    ToastModule,
     ConfirmDialogModule,
     EditorModule,
     ProgressSpinner,
-    ToggleSwitch
+    ToggleSwitch,
+    Tabs,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel,
+    Timeline,
+    Avatar,
+    Checkbox,
+    Message,
+    Toast
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './group.html',
